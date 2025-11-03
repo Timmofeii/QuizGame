@@ -1,8 +1,8 @@
 local Players = game:GetService("Players")
 -- Update path to point directly to installed package
 local ProfileService = require(
-	game:GetService("ServerScriptService").ServerPackages._Index["firecam702_profileservice@1.0.0"].profileservice.src.init
-)
+	game:GetService("ServerScriptService").ServerPackages.ProfileService)
+
 
 local ProfileTemplate = {
 	Coins = 0,
@@ -67,6 +67,27 @@ function ProfileManager:Save(player)
 	if profile then
 		profile:Save()
 	end
+end
+function ProfileManager:SetupLeaderstats(player)
+	local profile = self:Get(player)
+	if not profile then return end
+
+	local leaderstats = Instance.new("Folder")
+	leaderstats.Name = "leaderstats"
+	leaderstats.Parent = player
+
+	local coins = Instance.new("IntValue")
+	coins.Name = "Coins"
+	coins.Value = profile.Data.Coins
+	coins.Parent = leaderstats
+
+	-- Слушаем изменения и обновляем профиль
+	coins.Changed:Connect(function(newValue)
+		local p = self:Get(player)
+		if p and p.Data.Coins ~= newValue then
+			p.Data.Coins = newValue
+		end
+	end)
 end
 
 return ProfileManager
