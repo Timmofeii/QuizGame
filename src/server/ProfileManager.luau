@@ -1,8 +1,6 @@
 local Players = game:GetService("Players")
 -- Update path to point directly to installed package
-local ProfileService = require(
-	game:GetService("ServerScriptService").ServerPackages.ProfileService)
-
+local ProfileService = require(game:GetService("ServerScriptService").ServerPackages.ProfileService)
 
 local ProfileTemplate = {
 	Coins = 0,
@@ -28,7 +26,35 @@ function ProfileManager:Load(player)
 
 	if player:IsDescendantOf(Players) then
 		profiles[player] = profile
-		player:SetAttribute("Coins", profile.Data.Coins)
+
+		-- Reconcile missing fields from the template into the loaded profile so
+		-- players who played before a new field was added will receive defaults.
+		-- ProfileService exports Profile:Reconcile() which fills missing string-key
+		-- members from the original template. Call it safely (pcall) in case of
+		-- mock/missing implementation.
+		if type(profile.Reconcile) == "function" then
+			pcall(function()
+				profile:Reconcile()
+			end)
+		end
+
+		-- Mirror all template keys to player Attributes so the client can read them.
+		-- This loops over ProfileTemplate to keep behavior generic when fields are
+		-- added (e.g. `XP = 0`, `Level = 1`).
+		for key, _ in pairs(ProfileTemplate) do
+			local value = profile.Data[key]
+			-- It's fine if value is nil (shouldn't be after Reconcile) — SetAttribute
+			-- accepts nil and will remove the attribute.
+			player:SetAttribute(key, value)
+		end
+
+		-- Persist the profile so the newly reconciled fields are saved. Use pcall
+		-- to avoid blocking on save errors during join.
+		if type(profile.Save) == "function" then
+			pcall(function()
+				profile:Save()
+			end)
+		end
 	else
 		profile:Release()
 	end
@@ -68,9 +94,12 @@ function ProfileManager:Save(player)
 		profile:Save()
 	end
 end
+
 function ProfileManager:SetupLeaderstats(player)
 	local profile = self:Get(player)
-	if not profile then return end
+	if not profile then
+		return
+	end
 
 	local leaderstats = Instance.new("Folder")
 	leaderstats.Name = "leaderstats"
