@@ -1,9 +1,9 @@
 
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local QuizGameShared = ReplicatedStorage:WaitForChild("Shared"):WaitForChild("QuizGame")
+local Shared = ReplicatedStorage:WaitForChild("Shared")
 
-local QuizGameConfig = require(QuizGameShared.Configs.QuizGameConfig)
+local QuizGameConfig = require(Shared.Configs.QuizGameConfig)
 
 local ServerConfig = {}
 ServerConfig.__index = ServerConfig
@@ -28,9 +28,9 @@ function ServerConfig.new(model)
     self.ClearVariant = {'-', '-', '-', '-'}
 
     -- Модули
-    local ModulesShared = QuizGameShared.Modules
+    local ModulesShared = Shared.Modules
     self.Modules = {
-        QuizQuestions = require(QuizGameShared.Data.QuizQuestions),
+        QuizQuestions = require(Shared.Data.QuizQuestions),
         RotateCube = require(ModulesShared.RotateCube),
         TeleportSystem = require(ModulesShared.TeleportSystem),
         LKit = require(ModulesShared.LKit)

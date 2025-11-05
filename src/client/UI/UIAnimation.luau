@@ -24,6 +24,18 @@ function module.Down(frame: Frame)
 	return playTween(frame, positions.down)
 end
 
+function module.Timer(timerText: TextLabel, StartTime: number, ROUND_DURATION: number, running: boolean)
+	while running do
+		local elapsed = workspace:GetServerTimeNow() - StartTime
+		local remainig = math.max(0, ROUND_DURATION - elapsed)
+		timerText.Text = string.format("%d", math.floor(remainig))
+		if remainig <= 0 then
+			break
+		end
+		task.wait(0.1)
+	end
+end
+
 --!strict
 -- Типизация для функции
 ---@param label TextLabel -- UI элемент, в котором отображаются очки
@@ -41,4 +53,5 @@ function module.animationPoints(label: TextLabel, currentPoints: number, finalPo
 	end
 	label.Text = tostring(finalPoints)
 end
+
 return module
