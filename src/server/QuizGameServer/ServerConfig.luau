@@ -28,12 +28,12 @@ function ServerConfig.new(model)
     self.ClearVariant = {'-', '-', '-', '-'}
 
     -- Модули
-    local Modules = QuizGameShared.Modules
+    local ModulesShared = QuizGameShared.Modules
     self.Modules = {
-        QuizQuestions = require(Modules.QuizQuestions),
-        RotateCube = require(Modules.RotateCube),
-        TeleportSystem = require(Modules.TeleportSystem),
-        LKit = require(Modules.LKit)
+        QuizQuestions = require(QuizGameShared.Data.QuizQuestions),
+        RotateCube = require(ModulesShared.RotateCube),
+        TeleportSystem = require(ModulesShared.TeleportSystem),
+        LKit = require(ModulesShared.LKit)
     }
 
     -- Быстрые ссылки
