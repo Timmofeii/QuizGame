@@ -34,7 +34,7 @@ function ClientConfig:InitializeUI()
 	self.TIME_START_TEXT = SharedConfig.ROUND_DURATION
 	self.TIME_BEFORE_TIMER = SharedConfig.TIME_BEFORE_TIMER
 	self.uiRefs = {
-		timerText = self.gui.TimerFrame.TimerLabel,
+		timerText = self.gui.TimerFrame.TimerTextLabel,
 		questionText = self.gui.QuestionFrame.QuestionText,
 		-- ...
 	}
@@ -48,3 +48,5 @@ end
 function ClientConfig:GetEvents(): Events
 	return self.Events
 end
+
+return ClientConfig
