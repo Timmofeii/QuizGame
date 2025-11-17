@@ -1,0 +1,110 @@
+@startuml QuizGame
+skinparam backgroundColor #FEFEFE
+skinparam classBackgroundColor #F0F0F0
+
+class CharacteristicManager {
+    -list: table
+    -byId: map
+    -_nextId: number
+    --
+    +new(items)
+    +GetAll()
+    +GetById(id)
+    +GetIndexById(id)
+    +FindByText(text)
+    +Add(characteristic, id)
+    +RemoveById(id)
+    +UpdateById(id, patch)
+    +ToArray()
+}
+
+class GamePlaceManager {
+    -places: table
+    -freePlaces: table
+    -busyPlaces: table
+    --
+    +new(places)
+    +GetFreePlace()
+    +SetBusyPlace()
+    +PlaceToFree(busyPlaceId)
+}
+
+class GamePlace {
+    -place: Part
+    -isEmpty: boolean
+    --
+    +new(place, isEmpty)
+    +GetIsEmpty()
+}
+
+class LobbyTeleporter {
+    -partFrom: Part
+    -gamePlaces: table
+    -countLobbyPeople: number
+    --
+    +new(partFrom, gamePlaces, count)
+    +TeleportToLobby()
+}
+
+class Lobby {
+    -lobbyId: number
+    -Player1: Player
+    -Player2: Player
+    -state: string
+    -turn: number
+    --
+    +new(lobbyId, P1, P2, state, turn)
+    +IsFull()
+    +GetTurnPlayer()
+    +SwitchTurn()
+}
+
+class Player {
+    -playerId: number
+    -idCharacter: number
+    -listAvailableCharacters: table
+    --
+    +new(playerId, idCharacter, chars)
+}
+
+class ServerConfig {
+    -Model: Model
+    -Config: table
+    -ChoicePlatform: Instance
+    -ScreenPart: Part
+    -GameFrame: Frame
+    -Modules: table
+    --
+    +new(model)
+}
+
+class ClientConfig {
+    -player: Player
+    -gui: Instance
+    -Events: table
+    -uiRefs: table
+    -startRound: table
+    --
+    +new(player)
+    +InitializeUI()
+    +GetUIRefs()
+    +GetEvents()
+}
+
+class EventManager {
+    -config: ClientConfig
+    -running: boolean
+    -ui: table
+    --
+    +new(player)
+    +Start()
+}
+
+GamePlaceManager --> GamePlace
+Lobby --> Player
+ServerConfig --> GamePlaceManager
+ServerConfig --> LobbyTeleporter
+ClientConfig --> EventManager
+EventManager --> ClientConfig
+
+@enduml

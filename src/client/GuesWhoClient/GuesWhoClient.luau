@@ -1,4 +1,4 @@
-local CircylarSelector = require(game.ReplicatedStorage.Shared.Modules.CircularSelector)
+local CircularSelector = require(game.ReplicatedStorage.Shared.Modules.CircularSelector)
 local ClientConfig = require(script.Parent.Configs.ClientConfig)
 -- ToDo: добавить ивенты и функции для взаимодействия с сервером
 -- скривать и закрывать кнопку конфирм между раундами
