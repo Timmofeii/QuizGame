@@ -1,13 +1,12 @@
 local GamePlace = {}
 GamePlace.__index = GamePlace
 
-function GamePlace.new(place:Part,isEmpsy:bool)
+function GamePlace.new(part)
     local self = setmetatable({
-        place = place,
-        isEmpsy = isEmpsy
-    })
-end 
-
-function GamePlace.get_isEmpty(self)
-    return self.isEmpsy
+        part = part,
+        isBusy = false
+    }, GamePlace)
+    return self
 end
+
+return GamePlace
