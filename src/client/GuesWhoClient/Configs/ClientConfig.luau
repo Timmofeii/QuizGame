@@ -9,8 +9,8 @@ config.ToLeftButton = config.ButtonsFrame.ToLeftButton
 config.ToRightButton = config.ButtonsFrame.ToRightButton
 config.CharacteristicLabel = config.ButtonsFrame.CharacteristicLabel
 
-config.ConfirmButtob = config.SwitchFrame.ConfirmButton
+config.ConfirmButton = config.SwitchFrame.ConfirmButton
 
-config.ChractersImagesFrame = config.GuesWhoGui.CharactersImagesFrame
+config.CharactersImagesFrame = config.GuesWhoGui.CharactersImagesFrame
 
 return config
