@@ -9,4 +9,8 @@ function GamePlace.new(part)
     return self
 end
 
+function GamePlace:SetBusy(bool)
+    self.isBusy = bool
+end
+
 return GamePlace

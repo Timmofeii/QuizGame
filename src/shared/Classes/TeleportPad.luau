@@ -14,7 +14,7 @@ function TeleportPad.new(model,PlaceManager)
 
 end
 
-function TeleportPad:ConnctTouch()
+function TeleportPad:ConectTouch()
     self.model:WaitForChild("Gate"):Touched(function(hit)
         local player = game.Players:GetPlayerFormCharacter(hit.Parent)
         if not player then return end 
@@ -35,4 +35,6 @@ function TeleportPad:LaunchMatch()
     local places = {}
     for _,player in ipairs(self.players) do
         local place = self.placeManager:TakeFreePlace()
+    end
+end    
         

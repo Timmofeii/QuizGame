@@ -46,7 +46,7 @@ end
 function CharacteristicManager:GetById(id)
     return self.byId[id]
 end
-
+-- Returns the index of the item with the given id, or nil if not found.
 function CharacteristicManager:GetIndexById(id)
     for i, v in ipairs(self.list) do
         if v.id == id then
@@ -55,7 +55,7 @@ function CharacteristicManager:GetIndexById(id)
     end
     return nil
 end
-
+-- Finds first characteristic containing the given text (case-insensitive).
 function CharacteristicManager:FindByText(text)
     if not text then
         return nil
@@ -68,7 +68,7 @@ function CharacteristicManager:FindByText(text)
     end
     return nil
 end
-
+-- Adds a new characteristic. If id is nil, assigns the next available id.
 function CharacteristicManager:Add(characteristic, id)
     assert(characteristic and characteristic ~= "", "characteristic required")
     local newId = id
@@ -89,7 +89,7 @@ function CharacteristicManager:Add(characteristic, id)
     self.byId[newId] = item
     return item
 end
-
+-- Removes item by id. Returns true if removed, false if not found.
 function CharacteristicManager:RemoveById(id)
     local idx = self:GetIndexById(id)
     if not idx then
@@ -99,7 +99,7 @@ function CharacteristicManager:RemoveById(id)
     self.byId[id] = nil
     return true
 end
-
+-- Updates item by id with fields from patch table. Returns updated item or nil if not found.
 function CharacteristicManager:UpdateById(id, patch)
     local item = self.byId[id]
     if not item then
@@ -110,7 +110,7 @@ function CharacteristicManager:UpdateById(id, patch)
     end
     return item
 end
-
+-- Returns a shallow copy of the internal array of characteristics
 function CharacteristicManager:ToArray()
     -- return shallow copy of array to avoid accidental mutation
     local out = {}
