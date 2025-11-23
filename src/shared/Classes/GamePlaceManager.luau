@@ -10,6 +10,7 @@ function PlacesManager.new(places)
 end
 
 
+
 -- TODO: получение игровой зоны и расширение, или сделать количество площадок под игроков
 function PlacesManager:GetFreePlace()
     if #self.freePlaces >= 1 then
@@ -18,7 +19,7 @@ function PlacesManager:GetFreePlace()
         return nil
     end
 end
-
+-- function get free place, occypy and return place
 function PlacesManager:TakeFreePlace()
     local place = self:GetFreePlace()
     if place then
@@ -30,6 +31,12 @@ function PlacesManager:TakeFreePlace()
     return nil
 end
 
+function PlacesManager:OccupyPlace(place)
+    if place.isBusy then return end 
+    place.isBusy = true 
+    table.remove(self.freePlaces,table.find(self.freePlaces,place))
+    table.insert(self.freePlaces, place)
+end
 
 function PlacesManager:FreePlace(place)
     if not place.isBusy then return end

@@ -4,19 +4,20 @@ local LobbyTeleporter = {}
 LobbyTeleporter.__index = LobbyTeleporter
 
 
-function LobbyTeleporter.new(partFromTeleport:Part
+function LobbyTeleporter.new(partFromTeleport:Part,TeleportSystem
     local self = setmetatable({
         partFrom = partFromTeleport,
-       
+        TeleportSystem = TeleportSystem,
         playersToTeleport = {}
 
     })
+    return self
 end
 
 
 function LobbyTeleporter.teleportToLobby(players, partToTeleport)
     for _, player in ipairs(players) do
-        TeleportSystem.Teleport(partToTeleport,player)
+        self.TeleportSystem.Teleport(partToTeleport,player)
     end 
 end
 

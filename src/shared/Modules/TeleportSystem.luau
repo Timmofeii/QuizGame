@@ -17,7 +17,7 @@ function module.Teleport(ToPart: Part, player)
 
 	TeleportSingle(ToPart, hrp)
 end
-
+																				
 function module.TeleportBatch(ToPart: Part, players: {Player})
 	for _, player in ipairs(players) do
 		module.Teleport(ToPart, player)
