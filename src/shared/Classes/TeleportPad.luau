@@ -28,7 +28,7 @@ function TeleportPad:ConnectTouch()
         self:TryAddPlayer(player)
     end)
 end
-
+-- проверить запуск таймера и перенос игрока в игровую местность 
 function TeleportPad:UpdateUI()
     self.frame.players.Text = #self.players.."/"..self.maxPlayers
 
