@@ -1,14 +1,7 @@
-local StarterPlayerScripts = game:GetService("StarterPlayer").StarterPlayerScripts
-local EventManager = require(StarterPlayerScripts.Client.QuizGameClient.EventManager)
+local Client = script.Parent.Client
+local ClientConfig = require(Client.GuesWhoClient.Configs.ClientConfig)
+local GuesWhoController = require(Client.GuesWhoClient.Controller)
+local controller = GuesWhoController.new(ClientConfig)
+controller:connectButtons()
+-- при завершение игры controller:disable()
 
--- Получаем локального игрока
-local player = game.Players.LocalPlayer
-if not player then
-	player = game.Players.PlayerAdded:Wait()
-end
-
--- Создаём менеджер событий для игрока
-local eventManager = EventManager.new(player)
-
--- Запускаем обработку событий
-eventManager:Start()

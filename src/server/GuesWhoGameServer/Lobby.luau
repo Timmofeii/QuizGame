@@ -14,11 +14,11 @@ function Lobby.new(lobbyId, Player1, Player2, state, turn)
 	return self
 end
 
-function Lobby:isFull()
+function Lobby:IsFull()
 	return self.Player1 ~= nil and self.Player2 ~= nil
 end
 
-function Lobby:getTurnPlayer()
+function Lobby:GetTurnPlayer()
 	if self.turn == 1 then
 		return self.Player1
 	else
@@ -26,7 +26,7 @@ function Lobby:getTurnPlayer()
 	end
 end
 
-function Lobby:switchTurn()
+function Lobby:SwitchTurn()
 	if self.turn == 1 then
 		self.turn = 2
 	else

@@ -5,10 +5,8 @@
 
       "ReplicatedStorage": {
   "Shared": {
-  "$path": "src/shared",
-  "RemoteEvents": {
-  "$path": "src/shared/RemoteEvents.rbxm"
-  }
+  "$path": "src/shared"
+
   }
   },
 
