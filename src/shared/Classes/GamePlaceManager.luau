@@ -3,46 +3,57 @@ PlacesManager.__index = PlacesManager
 
 function PlacesManager.new(places)
     local self = setmetatable({
-        freePlaces = places,
-        busyPlaces = {}
+        places = places,
+        states = {
+            free = {},
+            busy = {},
+            reserved = {}
+        }   
     }, PlacesManager)
+    for _, place in ipairs(places) do
+        table.insert(self.states.free, place)
+    end
     return self
 end
 
 
--- Returns a free place without occupying it
-function PlacesManager:GetFreePlace()
-    if #self.freePlaces >= 1 then
-        return self.freePlaces[1]
-    else
-        return nil
+function PlacesManager:switchPlace(place, newState)
+    local oldState = place.state
+    if oldState == newState then return end
+    -- remove from old state
+    local idx = table.find(self.states[oldState], place)
+    if idx then
+        table.remove(self.states[oldState], idx)
     end
+    -- add to new state
+    table.insert(self.states[newState], place)
+    place.state = newState
 end
--- Occupies a given place
-function PlacesManager:OccupyPlace(place)
-    if place.isBusy then return end
-    place:SetBusy(true)
-    table.remove(self.freePlaces, table.find(self.freePlaces, place))
-    table.insert(self.busyPlaces, place)
+
+-- TODO: получение игровой зоны и расширение, или сделать количество площадок под игроков
+function PlacesManager:GetFreePlace()
+   return self.states.free[1] 
 end
--- Takes and occupies a free place
+-- function get free place, occypy and return place
 function PlacesManager:TakeFreePlace()
     local place = self:GetFreePlace()
     if place then
-        self:OccupyPlace(place)
+        self:switchPlace(place, "busy")
         return place
+    else 
+        warm("GamePlaceManager: no free places available")
+        return nil
     end
 
     warn("GamePlaceManager: no free places available")
     return nil
 end
 
--- Frees a given place
+
+
 function PlacesManager:FreePlace(place)
-    if not place.isBusy then return end
-    place:SetBusy(false)
-    table.remove(self.busyPlaces, table.find(self.busyPlaces, place))
-    table.insert(self.freePlaces, place)
+    if not place.state ~= 'busy' then return end
+    self:switchPlace(place, "free")
 end
 
 return PlacesManager

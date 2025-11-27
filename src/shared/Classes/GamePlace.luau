@@ -1,9 +1,8 @@
 local GamePlace = {}
 GamePlace.__index = GamePlace
 
-function GamePlace.new(part)
-    local self = setmetatable({
-        part = part,
+function GamePlace.new()
+    local self = setmetatable({    
         isBusy = false
     }, GamePlace)
     return self

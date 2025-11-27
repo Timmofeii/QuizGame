@@ -23,13 +23,11 @@ end
 --controls:Disable()
 
 -- oncupied  seat
-local function toSeat(character, seat)
+function SeatManager:toSeat(character, seat)
     character:MoveTo(seat.Position)
-    seat.isOccupied = true
+    
 end
 -- free the seat
-local function freeSeat(seat)
+function SeatManager:freeSeat(seat)
     seat.isOccupied = false
 end
-
-function SeatManager:GetFree

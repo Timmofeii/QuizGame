@@ -1,0 +1,16 @@
+local PlayersCharater = {}
+PlayersCharater.__index = PlayersCharater
+function PlayersCharater.new()
+    local self = setmetatable({
+        playersCharater = {}
+    }, PlayersCharater)
+    return self
+end
+
+function PlayersCharater:SetPlayerCharacter(player, character)
+    self.playersCharater[player] = character
+end
+
+function PlayersCharater:GetPlayerCharacter(player)
+    return self.playersCharater[player]
+end
